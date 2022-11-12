@@ -11,3 +11,4 @@ class Blog(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
 
     user = relationship('User', back_populates='blogs')
+    posts = relationship('Post', back_populates='blog')

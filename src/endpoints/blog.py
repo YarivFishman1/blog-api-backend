@@ -3,6 +3,7 @@ from src.models.blog import BlogCreate, BlogUpdate
 from sqlalchemy.orm import Session
 from db.db import get_db
 import db.crud.blog as crud
+import db.crud.post as post_crud
 
 
 router = APIRouter(
@@ -36,3 +37,8 @@ async def delete_blog(blog_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail='Blog not found')
     crud.delete_user(db, blog_id)
     return blog_id
+
+
+@router.get("/{blog_id}/posts")
+async def get_posts(blog_id: int, db: Session = Depends(get_db)):
+    post_crud.get_posts(db, blog_id)
