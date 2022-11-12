@@ -5,6 +5,7 @@ from src.models.user import User, UserCreate, UserUpdate
 from sqlalchemy.orm import Session
 from db.db import get_db
 import db.crud.user as crud
+import db.crud.blog as db_crud
 
 router = APIRouter(
     prefix="/users",
@@ -47,3 +48,8 @@ async def delete_user(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail='User not found')
     crud.delete_user(db, user_id)
     return user_id
+
+
+@router.get('/{user_id}/blogs')
+async def get_blogs(user_id: int, db: Session = Depends(get_db)):
+    return db_crud.get_blogs(user_id)
